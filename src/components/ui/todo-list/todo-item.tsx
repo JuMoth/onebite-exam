@@ -6,13 +6,13 @@ export default function TodoItem({
   id,
   content,
 }: {
-  id: number;
+  id: string;
   content: string;
 }) {
   const deleteTodo = useDeleteTodo();
 
   const handleDeleteClick = () => {
-    deleteTodo(id);
+    deleteTodo(Number(id));
   };
 
   return (
