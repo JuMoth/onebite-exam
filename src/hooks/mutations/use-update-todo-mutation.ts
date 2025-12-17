@@ -13,6 +13,7 @@ export function useUpdateTodoMutation() {
                 queryKey: QUERY_KEYS.todo.list,
             });
 
+            // 낙관전 업데이트
             const prevTodos = queryClient.getQueryData<Todo[]>(QUERY_KEYS.todo.list);
             queryClient.setQueryData<Todo[]>(QUERY_KEYS.todo.list, (prevTodos) => {
                 if (!prevTodos) return [];
@@ -34,6 +35,11 @@ export function useUpdateTodoMutation() {
                     context.prevTodos,
                 );
             }
-        }
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({
+                queryKey: QUERY_KEYS.todo.list,
+            });
+        },
     });
 }
